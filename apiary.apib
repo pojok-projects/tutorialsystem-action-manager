@@ -1,0 +1,150 @@
+FORMAT: 1A
+HOST: https://api.tutorialinaja.tech/vam/v1
+
+# VAM (Video Action Manager)
+
+DOCS Video Action Manager Api
+
+## API Host
+* HOST: https://api.tutorialinaja.tech
+
+##Api Version
+* /vam/v1
+
+## API Main End Point
+* https://api.tutorialinaja.tech/vam/v1
+
+## Upload Video [/upload]
+___
+**Table Routes:**
+| URL             | Method | INFO                   |
+| ----------------| ------ | -----------------------|
+| `/upload`       | POST   | Upload video           |
+
+**Upload Videos Parameter:**
+| Parameter    | type   | Status   | Description                   |
+| ------------ | ------ | -------- | ----------------------------- |
+| `video`      | binary | required | video mp4 only                |
+
+
+### Upload Video [POST /upload]
+
++ Parameter
+    + video (multipart/form-data; boundary=---BOUNDARY)
+
++ Response 200 (application/json)
+
+        {
+            "status": {
+                "code": 200,
+                "message": "Success upload",
+                "succeeded": true
+            },
+            "result": {
+                "file_name": "e60019ea-09e5-4727-9f26-262d118e8ad3.mp4",
+                "duration": 72,
+                "file_path": "/media.tutorialinaja.tech/e60019ea-09e5-4727-9f26-262d118e8ad3.mp4",
+                "size": 1371262,
+                "format": "mp4",
+                "resolution": "256x144"
+            }
+        }
+
+## Store metadata [/storemetadata]
+___
+**Table Routes:**
+| URL              | Method | INFO                               |
+| -----------------| ------ | ---------------------------------- |
+| `/storemetadata` | POST   | Store metadata to content manager  |
+
+**Upload Videos Parameter:**
+| Parameter           | type   | Status   | Description                        |
+| ------------------- | ------ | -------- | ---------------------------------- |
+| `user_id`           | UUID   | required | ID of User (UUID)                  |
+| `video_title`       | String | required | Title of Video                     |
+| `video_description` | String | required | Description Video                  |
+| `video_genre`       | String | required | Description of Video               |
+| `category_id`       | UUID   | required | ID From Content Category (UUID)    |
+| `privacy`           | String | required | Privacy of Video (public/private)  |
+| `file_name`         | String | required | File Name of Video with Extention  |
+| `duration`          | Int    | required | Duration of Video using seconds    |
+| `file_path`         | String | required | File Path of Video                 |
+| `size`              | Int    | required | Size of Video using bytes          |
+| `format`            | String | required | Format of Video (mp4)              |
+| `resolution`        | String | required | Resolution of Video                |
+
+
+### Upload Video [POST /storemetadata]
+
++ Request (application/json)
+
+        {
+            "user_id": "3903b2ac-d3f0-46fb-b421-0b386b8ae6a0",
+            "video_title": "Judul Video 2",
+            "video_description": "description video",
+            "video_genre": "contoh genre 2",
+            "category_id": "e1c27577-c1ac-4325-8bbd-574e77704987",
+            "privacy": "public",
+            
+            "file_name": "e60019ea-09e5-4727-9f26-262d118e8ad3.mp4",
+            "duration": 72,
+            "file_path": "/media.tutorialinaja.tech/e60019ea-09e5-4727-9f26-262d118e8ad3.mp4",
+            "size": 1371262,
+            "format": "mp4",
+            "resolution": "256x144"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "status": {
+                "code": "200",
+                "message": "data has been saved"
+            },
+            "result": {
+                "id": "104784f7-8df2-4b1d-9de6-53307eeff3b8"
+            }
+        }
+
+## Save Video [/savevideo/{userid}/{id_content_metadata}]
+___
+**Table Routes:**
+| URL                                        | Method | INFO           |
+| ------------------------------------------ | ------ | ---------------|
+| `savevideo/{userid}/{id_content_metadata}` | GET    | Save Video     |
+
+
+### Save Video [GET /savevideo/{userid}/{id_content_metadata}]
+
++ Parameter
+    + userid: `05237edb-4f5d-432d-9321-42a352804c29` (string, required) - Id of User
+    + id_content_metadata: `104784f7-8df2-4b1d-9de6-53307eeff3b8` (string, required) - Id of Content Metadata
+
++ Response 200 (application/json)
+
+        {
+            "status": {
+                "code": 200,
+                "message": "data has been saved"
+            },
+            "result": {
+                "id_user": "05237edb-4f5d-432d-9321-42a352804c29",
+                "id_content_metadata": "104784f7-8df2-4b1d-9de6-53307eeff3b8"
+            }
+        }
+        
+## Download Video [/downloadvideo/{id_content_metadata}/{filename}]
+___
+**Table Routes:**
+| URL                                              | Method | INFO            |
+| ------------------------------------------------ | ------ | --------------- |
+| `downloadvideo/{id_content_metadata}/{filename}` | GET    | Download Video  |
+
+
+### Download Video [GET /downloadvideo/{id_content_metadata}/{filename}]
+
++ Parameter
+    + id_content_metadata: `104784f7-8df2-4b1d-9de6-53307eeff3b8` (string, required) - Id of Content Metadata
+    + filename: `e60019ea-09e5-4727-9f26-262d118e8ad3` (string, required) - filename without extention
+
++ Response 200 (video/mp4)
