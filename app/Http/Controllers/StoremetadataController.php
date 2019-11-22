@@ -55,7 +55,7 @@ class StoremetadataController extends Controller
         );
 
         $result = $this->client->request('POST', $this->endpoint . 'content/metadata/store', [
-            'form_params' => [
+            'json' => [
                 'user_id' => $request->user_id,
                 'category_id' => $request->category_id,
                 'video_title' => $request->video_title,
